@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">BingeBox</string>
+    <string name="api_key">3a1326b8fcmsh2f46ecc75d4ed17p1b3933jsnefd0cd7c8795</string>
+    <string name="api_host">imdb8.p.rapidapi.com</string>
+</resources>
