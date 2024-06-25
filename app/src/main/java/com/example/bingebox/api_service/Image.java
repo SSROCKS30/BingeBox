@@ -1,4 +1,4 @@
-package com.example.bingebox;
+package com.example.bingebox.api_service;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

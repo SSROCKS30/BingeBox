@@ -1,6 +1,6 @@
-package com.example.bingebox;
+package com.example.bingebox.api_service;
 
-import java.util.List;
+import com.example.bingebox.api_service.Image;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -53,3 +53,4 @@ public class MovieDetails {
     }
 
 }
+

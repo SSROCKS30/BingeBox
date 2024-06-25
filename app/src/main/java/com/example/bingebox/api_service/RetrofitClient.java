@@ -1,4 +1,6 @@
-package com.example.bingebox;
+package com.example.bingebox.api_service;
+import com.example.bingebox.api_service.ApiService;
+
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 

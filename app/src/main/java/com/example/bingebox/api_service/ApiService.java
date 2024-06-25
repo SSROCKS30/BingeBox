@@ -1,4 +1,6 @@
-package com.example.bingebox;
+package com.example.bingebox.api_service;
+
+import com.example.bingebox.api_service.ApiResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

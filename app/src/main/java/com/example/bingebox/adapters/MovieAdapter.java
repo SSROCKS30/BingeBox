@@ -1,16 +1,19 @@
-package com.example.bingebox;
+package com.example.bingebox.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.List;
+import com.bumptech.glide.Glide;
+import com.example.bingebox.R;
+import com.example.bingebox.api_service.MovieDetails;
 
-import android.widget.ImageView;
-import android.widget.TextView;
+import java.util.List;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
 
@@ -31,9 +34,24 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     public void onBindViewHolder(@NonNull MovieViewHolder holder, int position) {
         MovieDetails movie = movies.get(position);
         holder.movieTitle.setText(movie.getL());
-        // You'll need to use an image loading library like Glide or Picasso to load the image
-        // For example, with Glide:
-        // Glide.with(holder.itemView.getContext()).load(movie.getImageUrl()).into(holder.movieImage);
+
+        String imageUrl = null;
+        if (movie.getI() != null) {
+            imageUrl = movie.getI().getImageUrl();
+        }
+
+        if (imageUrl != null && !imageUrl.isEmpty()) {
+            Glide.with(holder.itemView.getContext())
+                    .load(imageUrl)
+                    .placeholder(R.drawable.default_movie_poster) // Add a placeholder image
+                    .error(R.drawable.default_movie_poster) // Add an error image
+                    .into(holder.movieImage);
+        } else {
+            // Load default image if no URL is available
+            Glide.with(holder.itemView.getContext())
+                    .load(R.drawable.default_movie_poster)
+                    .into(holder.movieImage);
+        }
     }
 
     @Override

@@ -1,5 +1,13 @@
+import java.util.Properties
+
 plugins {
-    alias(libs.plugins.android.application)
+    id("com.android.application")
+}
+
+val localProperties = Properties()
+val localPropertiesFile = rootProject.file("local.properties")
+if (localPropertiesFile.exists()) {
+    localProperties.load(localPropertiesFile.inputStream())
 }
 
 android {
@@ -14,6 +22,9 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "API_KEY", "\"${localProperties.getProperty("api_key", "")}\"")
+        buildConfigField("String", "API_HOST", "\"${localProperties.getProperty("api_host", "")}\"")
     }
 
     buildTypes {
@@ -25,22 +36,28 @@ android {
             )
         }
     }
+
+    buildFeatures {
+        buildConfig = true
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
-    buildFeatures {
-        dataBinding = true
-    }
 }
 
 dependencies {
-
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.retrofitConverterGson)
     implementation(libs.retrofit)
+    implementation(libs.lifeCycle)
+    implementation(libs.liveData)
+    implementation(libs.roomruntime)
+    annotationProcessor(libs.roomcompiler)
     implementation(libs.activity)
+    implementation(libs.glide)
     implementation(libs.constraintlayout)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
