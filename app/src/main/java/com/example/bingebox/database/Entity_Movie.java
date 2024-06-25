@@ -6,20 +6,22 @@ import androidx.room.PrimaryKey;
 
 @Entity(tableName = "movie_table")
 public class Entity_Movie {
-    @ColumnInfo(name = "id")
     @PrimaryKey(autoGenerate = true)
     private int id;
+
     @ColumnInfo(name = "imgUrl")
     private String imgUrl;
+
     @ColumnInfo(name = "title")
     private String title;
+
     @ColumnInfo(name = "type")
     private String type;
+
     @ColumnInfo(name = "year")
     private String year;
 
-    public Entity_Movie(int id, String imgUrl, String title, String type, String year) {
-        this.id = id;
+    public Entity_Movie(String imgUrl, String title, String type, String year) {
         this.imgUrl = imgUrl;
         this.title = title;
         this.type = type;

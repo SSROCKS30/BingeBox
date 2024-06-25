@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.bingebox.R;
+import com.example.bingebox.RVInterface;
 import com.example.bingebox.api_service.MovieDetails;
 
 import java.util.List;
@@ -18,26 +19,28 @@ import java.util.List;
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
 
     private List<MovieDetails> movies;
+    RVInterface rvInterface;
 
-    public MovieAdapter(List<MovieDetails> movies) {
+    public MovieAdapter(List<MovieDetails> movies, RVInterface rvInterface) {
         this.movies = movies;
+        this.rvInterface = rvInterface;
     }
 
     @NonNull
     @Override
     public MovieViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_movie, parent, false);
-        return new MovieViewHolder(view);
+        return new MovieViewHolder(view, rvInterface);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MovieViewHolder holder, int position) {
         MovieDetails movie = movies.get(position);
-        holder.movieTitle.setText(movie.getL());
+        holder.movieTitle.setText(movie.getTitle());
 
         String imageUrl = null;
-        if (movie.getI() != null) {
-            imageUrl = movie.getI().getImageUrl();
+        if (movie.getImage() != null) {
+            imageUrl = movie.getImage().getImageUrl();
         }
 
         if (imageUrl != null && !imageUrl.isEmpty()) {
@@ -69,10 +72,19 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         ImageView movieImage;
         TextView movieTitle;
 
-        MovieViewHolder(View itemView) {
+        MovieViewHolder(View itemView, RVInterface rvInterface) {
             super(itemView);
             movieImage = itemView.findViewById(R.id.movieImage);
             movieTitle = itemView.findViewById(R.id.movieTitle);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+                    if(position != RecyclerView.NO_POSITION) {
+                        rvInterface.onItemClick(position);
+                    }
+                }
+            });
         }
     }
 }

@@ -14,15 +14,18 @@
         android:orientation="vertical">
 
         <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="168dp"
+            android:layout_height="252dp"
             app:cardCornerRadius="8dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="8dp"
             app:cardElevation="0dp">
 
             <ImageView
                 android:id="@+id/movieImage"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_width="168dp"
+                android:layout_height="252dp"
+                android:layout_gravity="center_horizontal"
                 android:scaleType="centerCrop"/>
 
         </androidx.cardview.widget.CardView>
@@ -33,6 +36,7 @@
             android:layout_height="wrap_content"
             android:padding="8dp"
             android:textSize="14sp"
+            android:textStyle="bold"
             android:maxLines="2"
             android:ellipsize="end"
             android:textAlignment="center"/>

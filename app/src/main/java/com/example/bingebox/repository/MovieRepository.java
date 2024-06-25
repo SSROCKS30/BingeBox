@@ -3,6 +3,7 @@ package com.example.bingebox.repository;
 import android.app.Application;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
@@ -55,20 +56,27 @@ public class MovieRepository {
 
             @Override
             public void onFailure(@NonNull Call<ApiResponse> call, @NonNull Throwable t) {
-                // Handle failure
+                mutableLiveData.setValue(new ArrayList<>());
             }
         });
         return mutableLiveData;
     }
+
     public void insertLB(Entity_Movie entityClass) {
-        executor.execute(() -> movieDao.insert(entityClass));
+        executor.execute(() -> {
+            Log.d("MovieRepository", "Inserting: " + entityClass.getTitle());
+            movieDao.insert(entityClass);
+        });
     }
+
     public void updateLB(Entity_Movie entityClass) {
         executor.execute(() -> movieDao.update(entityClass));
     }
+
     public void deleteLB(Entity_Movie entityClass) {
         executor.execute(() -> movieDao.delete(entityClass));
     }
+
     public LiveData<List<Entity_Movie>> getLibMovieDetails() {
         return movieDao.getAllMovies();
     }

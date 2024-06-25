@@ -12,43 +12,43 @@ public class MovieDetails {
     @SerializedName("l")
     @Expose
     private String title;
-    @SerializedName("q")
+    @SerializedName("qid")
     @Expose
     private String type;
-    @SerializedName("yr")
+    @SerializedName("y")
     @Expose
     private String year;
 
-    public Image getI() {
+    public Image getImage() {
         return imgUrl;
     }
 
-    public void setI(Image imgUrl) {
+    public void setImage(Image imgUrl) {
         this.imgUrl = imgUrl;
     }
 
-    public String getL() {
+    public String getTitle() {
         return title;
     }
 
-    public void setL(String title) {
+    public void setTitle(String title) {
         this.title = title;
     }
 
-    public String getQ() {
+    public String getType() {
         return type;
     }
 
-    public void setQ(String q) {
+    public void setType(String type) {
         this.type = type;
     }
 
 
-    public String getYr() {
+    public String getYear() {
         return year;
     }
 
-    public void setYr(String yr) {
+    public void setYear(String year) {
         this.year = year;
     }
 
