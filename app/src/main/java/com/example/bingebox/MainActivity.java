@@ -46,12 +46,12 @@ public class MainActivity extends AppCompatActivity {
                         .commit();
                 return true;
             }
-//            else if (itemId == R.id.navigation_library) {
-//                getSupportFragmentManager().beginTransaction()
-//                        .replace(R.id.fragment_container, new LibraryFragment())
-//                        .commit();
-//                return true;
-//            }
+            else if (itemId == R.id.navigation_library) {
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, new LibraryFragment())
+                        .commit();
+                return true;
+            }
             return false;
         });
     }
