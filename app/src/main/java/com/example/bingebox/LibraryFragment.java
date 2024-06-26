@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -59,7 +60,11 @@ public class LibraryFragment extends Fragment implements RVInterface {
 
     @Override
     public void onItemClick(int position) {
-        Entity_Movie item = adapter.getItemAt(position);
-        // Show library item details
+        Entity_Movie movie = adapter.getItemAt(position);
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        View dialogView = getLayoutInflater().inflate(R.layout.dialog_movie_lib_details, null);
+
+        Lib_dialog dialogBox = new Lib_dialog(requireContext(), dialogView, movie, viewModel);
+        dialogBox.display_dialog_box();
     }
 }

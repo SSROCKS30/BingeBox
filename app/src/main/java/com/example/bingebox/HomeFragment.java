@@ -23,7 +23,6 @@ import com.example.bingebox.viewmodel.View_Model;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class HomeFragment extends Fragment implements RVInterface {
 
@@ -105,7 +104,7 @@ public class HomeFragment extends Fragment implements RVInterface {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
         View dialogView = getLayoutInflater().inflate(R.layout.dialog_movie_details, null);
 
-        Dialog_Box dialogBox = new Dialog_Box(requireContext(), dialogView, movie, viewModel);
+        Home_dialog dialogBox = new Home_dialog(requireContext(), dialogView, movie, viewModel);
         dialogBox.display_dialog_box();
     }
 }
