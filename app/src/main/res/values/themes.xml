@@ -5,6 +5,8 @@
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
+    <color name="translucent_background">#F2FFFFFF</color> <!-- White with 50% opacity -->
+
 
     <style name="Theme.BingeBox" parent="Base.Theme.BingeBox" />
 </resources>

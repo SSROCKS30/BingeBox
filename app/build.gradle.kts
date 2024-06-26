@@ -39,6 +39,7 @@ android {
 
     buildFeatures {
         buildConfig = true
+        dataBinding = true
     }
 
     compileOptions {

@@ -17,6 +17,6 @@ public interface MovieDao {
     void update(Entity_Movie entityClass);
     @Delete
     void delete(Entity_Movie entityClass);
-    @Query("Select * from movie_table")
+    @Query("SELECT * FROM movie_table")
     LiveData<List<Entity_Movie>> getAllMovies();
 }

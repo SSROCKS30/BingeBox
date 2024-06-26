@@ -6,4 +6,6 @@
         <!-- Customize your dark theme here. -->
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
     </style>
+    <color name="translucent_background">#F2000000</color> <!-- Black with 50% opacity -->
+
 </resources>

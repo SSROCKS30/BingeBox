@@ -17,9 +17,8 @@ import com.example.bingebox.api_service.MovieDetails;
 import java.util.List;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
-
     private List<MovieDetails> movies;
-    RVInterface rvInterface;
+    private RVInterface rvInterface;
 
     public MovieAdapter(List<MovieDetails> movies, RVInterface rvInterface) {
         this.movies = movies;
@@ -35,26 +34,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
     @Override
     public void onBindViewHolder(@NonNull MovieViewHolder holder, int position) {
-        MovieDetails movie = movies.get(position);
-        holder.movieTitle.setText(movie.getTitle());
-
-        String imageUrl = null;
-        if (movie.getImage() != null) {
-            imageUrl = movie.getImage().getImageUrl();
-        }
-
-        if (imageUrl != null && !imageUrl.isEmpty()) {
-            Glide.with(holder.itemView.getContext())
-                    .load(imageUrl)
-                    .placeholder(R.drawable.default_movie_poster) // Add a placeholder image
-                    .error(R.drawable.default_movie_poster) // Add an error image
-                    .into(holder.movieImage);
-        } else {
-            // Load default image if no URL is available
-            Glide.with(holder.itemView.getContext())
-                    .load(R.drawable.default_movie_poster)
-                    .into(holder.movieImage);
-        }
+        holder.bind(movies.get(position));
     }
 
     @Override
@@ -63,28 +43,34 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     }
 
     public void updateMovies(List<MovieDetails> newMovies) {
-        movies.clear();
-        movies.addAll(newMovies);
+        movies = newMovies;
         notifyDataSetChanged();
     }
 
     static class MovieViewHolder extends RecyclerView.ViewHolder {
-        ImageView movieImage;
-        TextView movieTitle;
+        ImageView posterImageView;
+        TextView titleTextView;
 
-        MovieViewHolder(View itemView, RVInterface rvInterface) {
+        public MovieViewHolder(@NonNull View itemView, RVInterface rvInterface) {
             super(itemView);
-            movieImage = itemView.findViewById(R.id.movieImage);
-            movieTitle = itemView.findViewById(R.id.movieTitle);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    int position = getAdapterPosition();
-                    if(position != RecyclerView.NO_POSITION) {
-                        rvInterface.onItemClick(position);
+            posterImageView = itemView.findViewById(R.id.movieImage);
+            titleTextView = itemView.findViewById(R.id.movieTitle);
+
+            itemView.setOnClickListener(v -> {
+                if (rvInterface != null) {
+                    int pos = getAdapterPosition();
+                    if (pos != RecyclerView.NO_POSITION) {
+                        rvInterface.onItemClick(pos);
                     }
                 }
             });
+        }
+
+        public void bind(MovieDetails movie) {
+            titleTextView.setText(movie.getTitle());
+            Glide.with(itemView.getContext())
+                    .load(movie.getImage().getImageUrl())
+                    .into(posterImageView);
         }
     }
 }

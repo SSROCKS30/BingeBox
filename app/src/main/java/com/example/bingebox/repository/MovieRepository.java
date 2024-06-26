@@ -28,7 +28,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MovieRepository {
-    private final Application application;
     private List<MovieDetails> movieDetails = new ArrayList<>();
     private MutableLiveData<List<MovieDetails>> mutableLiveData = new MutableLiveData<>();
     private final MovieDao movieDao;
@@ -36,7 +35,6 @@ public class MovieRepository {
     Handler handler = new Handler(Looper.getMainLooper());
 
     public MovieRepository(Application application) {
-        this.application = application;
         MovieDB database = MovieDB.getInstance(application);
         this.movieDao = database.movieDao();
     }
@@ -64,7 +62,6 @@ public class MovieRepository {
 
     public void insertLB(Entity_Movie entityClass) {
         executor.execute(() -> {
-            Log.d("MovieRepository", "Inserting: " + entityClass.getTitle());
             movieDao.insert(entityClass);
         });
     }

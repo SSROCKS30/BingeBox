@@ -25,7 +25,6 @@ public class View_Model extends AndroidViewModel {
     }
 
     public void insertLB(Entity_Movie entityClass){
-        Log.d("View_Model", "insertLB: " + entityClass.getTitle());
         movieRepository.insertLB(entityClass);
     }
 

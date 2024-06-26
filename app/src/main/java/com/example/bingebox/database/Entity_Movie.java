@@ -6,26 +6,30 @@ import androidx.room.PrimaryKey;
 
 @Entity(tableName = "movie_table")
 public class Entity_Movie {
+    @ColumnInfo(name = "id_no")
     @PrimaryKey(autoGenerate = true)
     private int id;
-
-    @ColumnInfo(name = "imgUrl")
+    @ColumnInfo(name = "image_url")
     private String imgUrl;
-
-    @ColumnInfo(name = "title")
+    @ColumnInfo(name = "movie_title")
     private String title;
-
-    @ColumnInfo(name = "type")
+    @ColumnInfo(name = "movie_type")
     private String type;
-
-    @ColumnInfo(name = "year")
+    @ColumnInfo(name = "movie_year")
     private String year;
 
-    public Entity_Movie(String imgUrl, String title, String type, String year) {
+    @ColumnInfo(name = "movie_staus")
+    private String status;
+
+    public Entity_Movie(String imgUrl, String title, String type, String year, String status) {
         this.imgUrl = imgUrl;
         this.title = title;
         this.type = type;
         this.year = year;
+        this.status = status;
+    }
+
+    public Entity_Movie() {
     }
 
     public int getId() {
@@ -66,5 +70,13 @@ public class Entity_Movie {
 
     public void setYear(String year) {
         this.year = year;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }
