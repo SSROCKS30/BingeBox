@@ -9,6 +9,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import com.example.bingebox.fragments.HomeFragment;
 import com.example.bingebox.fragments.LibraryFragment;
@@ -19,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
     private EditText searchEditText;
     private HomeFragment homeFragment;
+    private LibraryFragment libraryFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (savedInstanceState == null) {
             homeFragment = HomeFragment.newInstance();
+            libraryFragment = new LibraryFragment().newInstance();
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragment_container, homeFragment)
                     .commit();
@@ -64,12 +67,17 @@ public class MainActivity extends AppCompatActivity {
             searchEditText.requestFocus();
             showKeyboard(searchEditText);
         });
-
         searchEditText.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_SEARCH ||
                     (event != null && event.getAction() == KeyEvent.ACTION_DOWN &&
                             event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
-                homeFragment.performSearch(searchEditText.getText().toString());
+                String query = searchEditText.getText().toString();
+                Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+                if (currentFragment instanceof HomeFragment) {
+                    ((HomeFragment) currentFragment).performSearch(query);
+                } else if (currentFragment instanceof LibraryFragment) {
+                    ((LibraryFragment) currentFragment).performSearchOnLibrary(query);
+                }
                 hideKeyboard(searchEditText);
                 searchEditText.clearFocus();
                 return true;

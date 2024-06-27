@@ -6,7 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -26,6 +28,7 @@ import com.example.bingebox.viewmodel.View_Model;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class LibraryFragment extends Fragment implements RVInterface {
 
@@ -33,6 +36,7 @@ public class LibraryFragment extends Fragment implements RVInterface {
     private LibraryAdapter adapter;
     private RecyclerView recyclerView;
     private Spinner statusSpinner;
+    private ProgressBar progressBar;
     private List<String> statusOptions = Arrays.asList("All", "Plan To Watch", "Dropped", "Watching", "Completed");
 
     @Nullable
@@ -48,11 +52,15 @@ public class LibraryFragment extends Fragment implements RVInterface {
         super.onViewCreated(view, savedInstanceState);
         recyclerView = view.findViewById(R.id.recyclerView);
         statusSpinner = view.findViewById(R.id.statusSpinner);
-        viewModel = new ViewModelProvider(requireActivity()).get(View_Model.class);
+        progressBar = view.findViewById(R.id.progressBar);
+        viewModel = new ViewModelProvider(this).get(View_Model.class);
 
         setupStatusSpinner();
         setupRecyclerView();
         loadAllLibraryItems();
+    }
+    public LibraryFragment newInstance() {
+        return new LibraryFragment();
     }
 
     private void setupStatusSpinner() {
@@ -99,8 +107,15 @@ public class LibraryFragment extends Fragment implements RVInterface {
     }
 
     private void loadAllLibraryItems() {
+        showProgressBar();
         viewModel.getLibMovies().observe(getViewLifecycleOwner(), libraryItems -> {
-            adapter.updateItems(libraryItems);
+            hideProgressBar();
+            if (libraryItems != null && !libraryItems.isEmpty()) {
+                adapter.updateItems(libraryItems);
+            } else {
+                Toast.makeText(requireContext(), "Your library is empty", Toast.LENGTH_SHORT).show();
+                adapter.updateItems(new ArrayList<>());
+            }
         });
     }
 
@@ -112,5 +127,41 @@ public class LibraryFragment extends Fragment implements RVInterface {
 
         Lib_dialog dialogBox = new Lib_dialog(requireContext(), dialogView, movie, viewModel);
         dialogBox.display_dialog_box();
+    }
+
+    public void performSearchOnLibrary(String query) {
+        if (query == null || query.isEmpty()) {
+            loadAllLibraryItems();
+            return;
+        }
+
+        showProgressBar();
+        viewModel.getLibMovies().observe(getViewLifecycleOwner(), libMovieDetails -> {
+            hideProgressBar();
+            if (libMovieDetails != null && !libMovieDetails.isEmpty()) {
+                List<Entity_Movie> movies = libMovieDetails.stream()
+                        .filter(movie -> movie.getTitle().toLowerCase().contains(query.toLowerCase()))
+                        .collect(Collectors.toList());
+
+                if (!movies.isEmpty()) {
+                    adapter.updateItems(movies);
+                } else {
+                    Toast.makeText(requireContext(), "No results found", Toast.LENGTH_SHORT).show();
+                    adapter.updateItems(new ArrayList<>());
+                }
+            } else {
+                Toast.makeText(requireContext(), "No movies in library", Toast.LENGTH_SHORT).show();
+                adapter.updateItems(new ArrayList<>());
+            }
+        });
+    }
+    private void showProgressBar() {
+        progressBar.setVisibility(View.VISIBLE);
+        recyclerView.setVisibility(View.GONE);
+    }
+
+    private void hideProgressBar() {
+        progressBar.setVisibility(View.GONE);
+        recyclerView.setVisibility(View.VISIBLE);
     }
 }

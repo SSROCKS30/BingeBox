@@ -3,8 +3,11 @@ package com.example.bingebox.dialogBox;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,12 +17,17 @@ import com.example.bingebox.api_service.MovieDetails;
 import com.example.bingebox.database.Entity_Movie;
 import com.example.bingebox.viewmodel.View_Model;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class Lib_dialog {
     private Context context;
     private View dialogView;
     private Entity_Movie movie;
     private View_Model view_model;
     private AlertDialog dialog;
+    private Spinner dialogchangeMovieStatus;
+    private List<String> statusOptions = Arrays.asList("Plan To Watch", "Dropped", "Watching", "Completed");
 
     public Lib_dialog(Context context, View dialogView, Entity_Movie movie, View_Model view_model) {
         this.context = context;
@@ -34,15 +42,13 @@ public class Lib_dialog {
         TextView dialogMovieTitle = dialogView.findViewById(R.id.dialogMovieTitle);
         TextView dialogMovieYear = dialogView.findViewById(R.id.dialogMovieYear);
         TextView dialogMovieGenre = dialogView.findViewById(R.id.dialogMovieGenre);
-        TextView dialogMovieStatus = dialogView.findViewById(R.id.dialogMovieStatus);
         ImageView dialogMovieStatusIcon = dialogView.findViewById(R.id.dialogMovieRating);
-        Button dialogchangeMovieStatusButton = dialogView.findViewById(R.id.changeMovieStatus);
+        dialogchangeMovieStatus = dialogView.findViewById(R.id.statusSpinner);
         Button dialogMovieReviewButton = dialogView.findViewById(R.id.movie_review);
 
         dialogMovieTitle.setText(movie.getTitle());
         dialogMovieYear.setText(movie.getYear());
         dialogMovieGenre.setText(movie.getType().toUpperCase());
-        dialogMovieStatus.setText("STATUS: " + movie.getStatus());
 
         // Load image using Glide
         if (movie.getImgUrl() != null && movie.getImgUrl() != null) {
@@ -57,20 +63,38 @@ public class Lib_dialog {
 
         builder.setView(dialogView);
         dialog = builder.create();
-        dialogchangeMovieStatusButton.setOnClickListener(v -> {
-            if (movie.getStatus().equals("Plan To Watch")) {
-                movie.setStatus("Watching");
-            } else if (movie.getStatus().equals("Watching")) {
-                movie.setStatus("Completed");
-            } else if (movie.getStatus().equals("Completed")) {
-                movie.setStatus("Dropped");
-            } else if (movie.getStatus().equals("Dropped")) {
-                movie.setStatus("Plan To Watch");
-            }
-            dialogMovieStatus.setText("STATUS:  " + movie.getStatus());
-            view_model.updateLB(movie);
-        });
+
 
         dialog.show();
+        setupStatusSpinner();
+    }
+    private void setupStatusSpinner() {
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, statusOptions);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        dialogchangeMovieStatus.setAdapter(adapter);
+
+        // Set the initial selection
+        int initialPosition = statusOptions.indexOf(movie.getStatus());
+        if (initialPosition != -1) {
+            dialogchangeMovieStatus.setSelection(initialPosition);
+        }
+
+        dialogchangeMovieStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selectedStatus = statusOptions.get(position);
+                if (!selectedStatus.equals(movie.getStatus())) {
+                    movie.setStatus(selectedStatus);
+                    // Update the movie in the database
+                    view_model.updateLB(movie);
+                    Toast.makeText(context, "Status updated to: " + selectedStatus, Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // Do nothing
+            }
+        });
     }
 }

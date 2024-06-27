@@ -7,8 +7,8 @@
 
     <ImageView
         android:id="@+id/dialogMovieImage"
-        android:layout_width="144dp"
-        android:layout_height="216dp"
+        android:layout_width="120dp"
+        android:layout_height="180dp"
         android:scaleType="centerCrop" />
 
     <LinearLayout
@@ -36,11 +36,25 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp" />
 
-        <TextView
-            android:id="@+id/dialogMovieStatus"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"/>
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="STATUS:"
+                android:layout_gravity="center_vertical"/>
+
+            <Spinner
+                android:id="@+id/statusSpinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+        </LinearLayout>
+
         <ImageView
             android:id="@+id/dialogMovieRating"
             android:layout_width="wrap_content"
@@ -48,28 +62,12 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="8dp"/>
 
-        <LinearLayout
+        <Button
+            android:id="@+id/movie_review"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="8dp">
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Status"
-                android:layout_marginRight="5dp"
-                android:layout_weight="1"
-                android:id="@+id/changeMovieStatus"/>
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Review"
-                android:id="@+id/movie_review"/>
-        </LinearLayout>
-
+            android:layout_marginTop="8dp"
+            android:text="Review"/>
 
     </LinearLayout>
 </LinearLayout>
