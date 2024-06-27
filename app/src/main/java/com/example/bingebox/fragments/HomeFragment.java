@@ -17,6 +17,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.bingebox.SharedViewModel;
 import com.example.bingebox.dialogBox.Home_dialog;
 import com.example.bingebox.R;
 import com.example.bingebox.RVInterface;
@@ -34,6 +35,7 @@ public class HomeFragment extends Fragment implements RVInterface {
     private ProgressBar progressBar;
     private RecyclerView recyclerView;
     private List<MovieDetails> movies;
+    private SharedViewModel sharedViewModel;
 
     @Nullable
     @Override
@@ -42,6 +44,7 @@ public class HomeFragment extends Fragment implements RVInterface {
 
         recyclerView = view.findViewById(R.id.recyclerView);
         progressBar = view.findViewById(R.id.progressBar);
+        sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
 
         return view;
     }
@@ -53,7 +56,7 @@ public class HomeFragment extends Fragment implements RVInterface {
         viewModel = new ViewModelProvider(requireActivity()).get(View_Model.class);
 
         setupRecyclerView();
-        performInitialSearch();
+        loadSavedDataOrPerformInitialSearch();
     }
     public static HomeFragment newInstance() {
         return new HomeFragment();
@@ -67,6 +70,18 @@ public class HomeFragment extends Fragment implements RVInterface {
         recyclerView.setAdapter(adapter);
     }
 
+    private void loadSavedDataOrPerformInitialSearch() {
+        String lastQuery = sharedViewModel.getLastSearchQuery().getValue();
+        List<MovieDetails> lastResults = sharedViewModel.getLastMovieResults().getValue();
+
+        if (lastQuery != null && lastResults != null) {
+            movies = lastResults;
+            adapter.updateMovies(movies);
+        } else {
+            performInitialSearch();
+        }
+    }
+
     private void performInitialSearch() {
         performSearch("Harry Potter");
     }
@@ -78,6 +93,8 @@ public class HomeFragment extends Fragment implements RVInterface {
             if (movieDetails != null) {
                 movies = movieDetails;
                 adapter.updateMovies(movies);
+                sharedViewModel.setLastSearchQuery(query);
+                sharedViewModel.setLastMovieResults(movies);
             } else {
                 movies = new ArrayList<>();
                 adapter.updateMovies(movies);

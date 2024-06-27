@@ -7,5 +7,22 @@
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
     </style>
     <color name="translucent_background">#F2000000</color> <!-- Black with 50% opacity -->
+    <style name="CustomBottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="itemTextAppearanceActive">@style/TextAppearance.CustomBottomNavigationView.Active</item>
+        <item name="itemTextAppearanceInactive">@style/TextAppearance.CustomBottomNavigationView.Inactive</item>
+        <item name="itemBackground">@null</item>
+        <item name="itemRippleColor">@android:color/transparent</item>
+    </style>
+
+    <style name="TextAppearance.CustomBottomNavigationView.Active" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/purple</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextAppearance.CustomBottomNavigationView.Inactive" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@android:color/darker_gray</item>
+    </style>
 
 </resources>

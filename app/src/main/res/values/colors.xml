@@ -3,6 +3,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="black_shade">#141218</color>
-    <color name="purple">#8B2F9E</color>
-
+    <color name="purple">#800080</color>
+    <color name="selected_text_color">#9C27B0</color> <!-- A purple color for selected text -->
+    <color name="unselected_text_color">#757575</color> <!-- A grey color for unselected text -->
 </resources>

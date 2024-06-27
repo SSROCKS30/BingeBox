@@ -20,6 +20,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     private List<MovieDetails> movies;
     private RVInterface rvInterface;
 
+
     public MovieAdapter(List<MovieDetails> movies, RVInterface rvInterface) {
         this.movies = movies;
         this.rvInterface = rvInterface;
@@ -68,9 +69,16 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
         public void bind(MovieDetails movie) {
             titleTextView.setText(movie.getTitle());
-            Glide.with(itemView.getContext())
-                    .load(movie.getImage().getImageUrl())
-                    .into(posterImageView);
+            if(movie.getImage() != null && movie.getImage().getImageUrl() != null){
+                Glide.with(itemView.getContext())
+                        .load(movie.getImage().getImageUrl())
+                        .placeholder(R.drawable.default_movie_poster)
+                        .error(R.drawable.default_movie_poster)
+                        .into(posterImageView);
+            }
+            else{
+                posterImageView.setImageResource(R.drawable.default_movie_poster);
+            }
         }
     }
 }

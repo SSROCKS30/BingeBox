@@ -10,6 +10,7 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.bingebox.fragments.HomeFragment;
 import com.example.bingebox.fragments.LibraryFragment;
@@ -21,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText searchEditText;
     private HomeFragment homeFragment;
     private LibraryFragment libraryFragment;
+    private SharedViewModel sharedViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
         bottomNavigationView = findViewById(R.id.bottomNavigation);
         searchEditText = findViewById(R.id.searchEditText);
+        sharedViewModel = new ViewModelProvider(this).get(SharedViewModel.class);
 
         if (savedInstanceState == null) {
             homeFragment = HomeFragment.newInstance();
@@ -53,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
             }
             else if (itemId == R.id.navigation_library) {
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, new LibraryFragment())
+                        .replace(R.id.fragment_container, libraryFragment)
                         .commit();
                 return true;
             }
