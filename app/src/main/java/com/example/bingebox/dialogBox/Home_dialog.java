@@ -1,7 +1,8 @@
-package com.example.bingebox;
+package com.example.bingebox.dialogBox;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.bingebox.R;
 import com.example.bingebox.api_service.MovieDetails;
 import com.example.bingebox.database.Entity_Movie;
 import com.example.bingebox.viewmodel.View_Model;
@@ -20,7 +22,7 @@ public class Home_dialog {
     private View_Model view_model;
     private AlertDialog dialog;
 
-    Home_dialog(Context context, View dialogView, MovieDetails movie, View_Model view_model) {
+    public Home_dialog(Context context, View dialogView, MovieDetails movie, View_Model view_model) {
         this.context = context;
         this.dialogView = dialogView;
         this.movie = movie;
@@ -40,7 +42,15 @@ public class Home_dialog {
         dialogMovieGenre.setText(movie.getType().toUpperCase());
 
         // Load image using Glide
-        if (movie.getImage() != null && movie.getImage().getImageUrl() != null) {
+        Log.d("MovieAdapter", "Movie: " + movie);
+        if (movie != null) {
+            Log.d("MovieAdapter", "Movie Image: " + movie.getImage());
+            if (movie.getImage() != null) {
+                Log.d("MovieAdapter", "Image URL: " + movie.getImage().getImageUrl());
+            }
+        }
+
+        if (movie != null && movie.getImage() != null && movie.getImage().getImageUrl() != null) {
             Glide.with(context)
                     .load(movie.getImage().getImageUrl())
                     .placeholder(R.drawable.default_movie_poster)
@@ -49,6 +59,8 @@ public class Home_dialog {
         } else {
             dialogMovieImage.setImageResource(R.drawable.default_movie_poster);
         }
+
+
 
         builder.setView(dialogView);
         dialog = builder.create();

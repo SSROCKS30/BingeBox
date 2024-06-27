@@ -1,4 +1,4 @@
-package com.example.bingebox;
+package com.example.bingebox.fragments;
 
 
 
@@ -17,6 +17,9 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.bingebox.dialogBox.Home_dialog;
+import com.example.bingebox.R;
+import com.example.bingebox.RVInterface;
 import com.example.bingebox.adapters.MovieAdapter;
 import com.example.bingebox.api_service.MovieDetails;
 import com.example.bingebox.viewmodel.View_Model;

@@ -1,4 +1,4 @@
-package com.example.bingebox;
+package com.example.bingebox.dialogBox;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -9,6 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.bingebox.R;
 import com.example.bingebox.api_service.MovieDetails;
 import com.example.bingebox.database.Entity_Movie;
 import com.example.bingebox.viewmodel.View_Model;
@@ -20,7 +21,7 @@ public class Lib_dialog {
     private View_Model view_model;
     private AlertDialog dialog;
 
-    Lib_dialog(Context context, View dialogView, Entity_Movie movie, View_Model view_model) {
+    public Lib_dialog(Context context, View dialogView, Entity_Movie movie, View_Model view_model) {
         this.context = context;
         this.dialogView = dialogView;
         this.movie = movie;
