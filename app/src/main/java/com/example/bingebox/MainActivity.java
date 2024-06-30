@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -23,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private HomeFragment homeFragment;
     private LibraryFragment libraryFragment;
     private SharedViewModel sharedViewModel;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,5 +103,10 @@ public class MainActivity extends AppCompatActivity {
         if (imm != null) {
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
+    }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        // Add any custom logic here if needed
     }
 }

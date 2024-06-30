@@ -24,5 +24,7 @@
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@android:color/darker_gray</item>
     </style>
+    <color name="splash_background">@color/splash_background_dark</color>
+    <color name="splash_text">@color/splash_text_dark</color>
 
 </resources>

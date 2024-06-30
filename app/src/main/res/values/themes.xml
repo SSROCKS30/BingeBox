@@ -27,4 +27,6 @@
 
 
     <style name="Theme.BingeBox" parent="Base.Theme.BingeBox" />
+    <color name="splash_background">@color/splash_background_light</color>
+    <color name="splash_text">@color/splash_text_light</color>
 </resources>

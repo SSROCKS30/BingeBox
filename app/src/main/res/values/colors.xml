@@ -6,4 +6,8 @@
     <color name="purple">#800080</color>
     <color name="selected_text_color">#9C27B0</color> <!-- A purple color for selected text -->
     <color name="unselected_text_color">#757575</color> <!-- A grey color for unselected text -->
+    <color name="splash_background_light">#FFFFFF</color>
+    <color name="splash_text_light">#000000</color>
+    <color name="splash_background_dark">#121212</color>
+    <color name="splash_text_dark">#FFFFFF</color>
 </resources>
