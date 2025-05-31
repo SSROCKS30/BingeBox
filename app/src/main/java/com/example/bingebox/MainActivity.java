@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (savedInstanceState == null) {
             homeFragment = HomeFragment.newInstance();
-            libraryFragment = new LibraryFragment().newInstance();
+            libraryFragment = LibraryFragment.newInstance();
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragment_container, homeFragment)
                     .commit();

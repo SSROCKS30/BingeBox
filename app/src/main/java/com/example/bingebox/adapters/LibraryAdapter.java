@@ -14,6 +14,7 @@ import com.example.bingebox.R;
 import com.example.bingebox.RVInterface;
 import com.example.bingebox.database.Entity_Movie;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.LibraryViewHolder> {
@@ -43,11 +44,14 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.LibraryV
     }
 
     public void updateItems(List<Entity_Movie> newItems) {
-        items = newItems;
+        items = newItems != null ? newItems : new ArrayList<>();
         notifyDataSetChanged();
     }
 
     public Entity_Movie getItemAt(int position) {
+        if (position < 0 || position >= items.size()) {
+            return null;
+        }
         return items.get(position);
     }
 
@@ -71,10 +75,18 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.LibraryV
         }
 
         public void bind(Entity_Movie movie) {
-            titleTextView.setText(movie.getTitle());
-            Glide.with(itemView.getContext())
-                    .load(movie.getImgUrl())
-                    .into(imageView);
+            if (movie == null) return;
+            
+            titleTextView.setText(movie.getTitle() != null ? movie.getTitle() : "");
+            if (movie.getImgUrl() != null) {
+                Glide.with(itemView.getContext())
+                        .load(movie.getImgUrl())
+                        .placeholder(R.drawable.default_movie_poster)
+                        .error(R.drawable.default_movie_poster)
+                        .into(imageView);
+            } else {
+                imageView.setImageResource(R.drawable.default_movie_poster);
+            }
         }
     }
 }

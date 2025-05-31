@@ -87,6 +87,10 @@ public class HomeFragment extends Fragment implements RVInterface {
     }
 
     public void performSearch(String query) {
+        if (query == null || query.trim().isEmpty()) {
+            Toast.makeText(requireContext(), "Please enter a search query", Toast.LENGTH_SHORT).show();
+            return;
+        }
         showProgressBar();
         viewModel.getMovieDetails(query).observe(getViewLifecycleOwner(), movieDetails -> {
             hideProgressBar();
@@ -119,7 +123,13 @@ public class HomeFragment extends Fragment implements RVInterface {
 
     @Override
     public void onItemClick(int position) {
+        if (movies == null || position >= movies.size()) {
+            return;
+        }
         MovieDetails movie = getMovieAt(position);
+        if (movie == null || getContext() == null) {
+            return;
+        }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
         View dialogView = getLayoutInflater().inflate(R.layout.dialog_movie_details, null);

@@ -2,6 +2,7 @@ package com.example.bingebox.dialogBox;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.bingebox.R;
+import com.example.bingebox.Review;
 import com.example.bingebox.api_service.MovieDetails;
 import com.example.bingebox.database.Entity_Movie;
 import com.example.bingebox.viewmodel.View_Model;
@@ -67,6 +69,13 @@ public class Lib_dialog {
 
         dialog.show();
         setupStatusSpinner();
+
+        dialogMovieReviewButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setReview();
+            }
+        });
     }
     private void setupStatusSpinner() {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, statusOptions);
@@ -96,5 +105,9 @@ public class Lib_dialog {
                 // Do nothing
             }
         });
+    }
+    public void setReview(){
+        Intent i = new Intent(context, Review.class);
+
     }
 }

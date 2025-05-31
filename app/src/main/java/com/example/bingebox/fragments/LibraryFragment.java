@@ -59,7 +59,7 @@ public class LibraryFragment extends Fragment implements RVInterface {
         setupRecyclerView();
         loadAllLibraryItems();
     }
-    public LibraryFragment newInstance() {
+    public static LibraryFragment newInstance() {
         return new LibraryFragment();
     }
 
@@ -91,19 +91,24 @@ public class LibraryFragment extends Fragment implements RVInterface {
     }
 
     private void filterMoviesByStatus(String status) {
+        if (status == null) return;
+        
         if (status.equals("All")) {
             loadAllLibraryItems();
-        } else {
-            viewModel.getLibMovies().observe(getViewLifecycleOwner(), libraryItems -> {
-                List<Entity_Movie> filteredItems = new ArrayList<>();
-                for (Entity_Movie item : libraryItems) {
-                    if (item.getStatus().equals(status)) {
-                        filteredItems.add(item);
-                    }
-                }
-                adapter.updateItems(filteredItems);
-            });
+            return;
         }
+        
+        viewModel.getLibMovies().observe(getViewLifecycleOwner(), libraryItems -> {
+            if (libraryItems == null) {
+                adapter.updateItems(new ArrayList<>());
+                return;
+            }
+            
+            List<Entity_Movie> filteredItems = libraryItems.stream()
+                .filter(item -> status.equals(item.getStatus()))
+                .collect(Collectors.toList());
+            adapter.updateItems(filteredItems);
+        });
     }
 
     private void loadAllLibraryItems() {
@@ -121,7 +126,11 @@ public class LibraryFragment extends Fragment implements RVInterface {
 
     @Override
     public void onItemClick(int position) {
+        if (getContext() == null) return;
+        
         Entity_Movie movie = adapter.getItemAt(position);
+        if (movie == null) return;
+
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
         View dialogView = getLayoutInflater().inflate(R.layout.dialog_movie_lib_details, null);
 

@@ -17,9 +17,10 @@ public class Entity_Movie {
     private String type;
     @ColumnInfo(name = "movie_year")
     private String year;
-
     @ColumnInfo(name = "movie_staus")
     private String status;
+//    @ColumnInfo(name = "movie_rating")
+//    private String rating;
 
     public Entity_Movie(String imgUrl, String title, String type, String year, String status) {
         this.imgUrl = imgUrl;

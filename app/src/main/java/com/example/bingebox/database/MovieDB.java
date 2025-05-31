@@ -10,10 +10,17 @@ import androidx.room.RoomDatabase;
 public abstract class MovieDB extends RoomDatabase {
     public abstract MovieDao movieDao();
     private static MovieDB instance;
-    public static synchronized MovieDB getInstance(Context context) { // To ensure only one instance is created
+    public static synchronized MovieDB getInstance(Context context) {
+        if (context == null) {
+            throw new IllegalArgumentException("Context cannot be null");
+        }
+        
         if (instance == null) {
-            instance = Room.databaseBuilder(context, MovieDB.class, "movie_database").fallbackToDestructiveMigration().build();
-            //.fallbackToDestructiveMigration() is used to delete the table and recreate it according to the new schema if the version is changed
+            instance = Room.databaseBuilder(context.getApplicationContext(), 
+                    MovieDB.class, 
+                    "movie_database")
+                    .fallbackToDestructiveMigration()
+                    .build();
         }
         return instance;
     }

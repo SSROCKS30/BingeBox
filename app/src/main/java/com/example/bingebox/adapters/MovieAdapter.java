@@ -14,6 +14,7 @@ import com.example.bingebox.R;
 import com.example.bingebox.RVInterface;
 import com.example.bingebox.api_service.MovieDetails;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
@@ -44,7 +45,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     }
 
     public void updateMovies(List<MovieDetails> newMovies) {
-        movies = newMovies;
+        movies = newMovies != null ? newMovies : new ArrayList<>();
         notifyDataSetChanged();
     }
 
@@ -68,15 +69,16 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         }
 
         public void bind(MovieDetails movie) {
-            titleTextView.setText(movie.getTitle());
-            if(movie.getImage() != null && movie.getImage().getImageUrl() != null){
+            if (movie == null) return;
+            
+            titleTextView.setText(movie.getTitle() != null ? movie.getTitle() : "");
+            if (movie.getImage() != null && movie.getImage().getImageUrl() != null) {
                 Glide.with(itemView.getContext())
                         .load(movie.getImage().getImageUrl())
                         .placeholder(R.drawable.default_movie_poster)
                         .error(R.drawable.default_movie_poster)
                         .into(posterImageView);
-            }
-            else{
+            } else {
                 posterImageView.setImageResource(R.drawable.default_movie_poster);
             }
         }

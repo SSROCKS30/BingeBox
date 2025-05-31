@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "154216583881",
+    "project_id": "bingebox-6a101",
+    "storage_bucket": "bingebox-6a101.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:154216583881:android:f695de105596f8c78b3318",
+        "android_client_info": {
+          "package_name": "com.example.bingebox"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCj1ekXJwU9TfRoSD3hB4mZVguIA63PexI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
